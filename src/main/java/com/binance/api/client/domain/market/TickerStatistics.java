@@ -95,6 +95,12 @@ public class TickerStatistics {
    */
   private long count;
 
+  // sinhlt added for v1 -> v3
+  private String quoteVolume;
+  public String getQuoteVolume() {return quoteVolume;}
+  public void setQuoteVolume(String v) {this.quoteVolume = v;}
+  // sinhlt added for v1 -> v3
+
   public String getPriceChange() {
     return priceChange;
   }

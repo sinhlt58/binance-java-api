@@ -58,6 +58,13 @@ public class NewOrder {
    */
   private String stopPrice;
 
+  // sinhlt added
+  /**
+   * Used with stop orders.
+   */
+  private String stopLimitPrice;
+  // sinhlt added
+
   /**
    * Used with iceberg orders.
    */
@@ -176,6 +183,16 @@ public class NewOrder {
     return stopPrice;
   }
 
+  // sinhlt added
+  public void setStopLimitPrice(String price) {
+    this.stopLimitPrice = price;
+  }
+
+  public String getStopLimitPrice() {
+    return stopLimitPrice;
+  }
+  // sinhlt added
+
   public NewOrder stopPrice(String stopPrice) {
     this.stopPrice = stopPrice;
     return this;
@@ -252,6 +269,32 @@ public class NewOrder {
   public static NewOrder limitSell(String symbol, TimeInForce timeInForce, String quantity, String price) {
     return new NewOrder(symbol, OrderSide.SELL, OrderType.LIMIT, timeInForce, quantity, price);
   }
+
+  // sinhlt added
+  public static NewOrder ocoSell(String symbol, String quantity, double price, double stopPrice, double stopLimitPrice){
+    return ocoSell(symbol, quantity, String.valueOf(price), String.valueOf(stopPrice), String.valueOf(stopLimitPrice));
+  }
+
+  public static NewOrder ocoSell(String symbol, String quantity, String price, String stopPrice, String stopLimitPrice){
+    NewOrder order = new NewOrder(symbol, OrderSide.SELL, OrderType.OCO, TimeInForce.GTC, quantity, price);
+    order.stopPrice = stopPrice;
+    order.stopLimitPrice = stopLimitPrice;
+    order.newOrderRespType = NewOrderResponseType.ACK;
+    return order;
+  }
+
+  public static NewOrder ocoBuy(String symbol, String quantity, double price, double stopPrice, double stopLimitPrice){
+    return ocoBuy(symbol, quantity, String.valueOf(price), String.valueOf(stopPrice), String.valueOf(stopLimitPrice));
+  }
+
+  public static NewOrder ocoBuy(String symbol, String quantity, String price, String stopPrice, String stopLimitPrice){
+    NewOrder order = new NewOrder(symbol, OrderSide.BUY, OrderType.OCO, TimeInForce.GTC, quantity, price);
+    order.stopPrice = stopPrice;
+    order.stopLimitPrice = stopLimitPrice;
+    order.newOrderRespType = NewOrderResponseType.ACK;
+    return order;
+  }
+  // sinhlt added
 
   @Override
   public String toString() {

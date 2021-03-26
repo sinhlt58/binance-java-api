@@ -59,7 +59,8 @@ public interface BinanceApiService {
     @GET("/api/v1/ticker/24hr")
     Call<TickerStatistics> get24HrPriceStatistics(@Query("symbol") String symbol);
 
-    @GET("/api/v1/ticker/24hr")
+    // sinhlt changed v1 -> v3
+    @GET("/api/v3/ticker/24hr")
     Call<List<TickerStatistics>> getAll24HrPriceStatistics();
 
     @GET("/api/v1/ticker/allPrices")
@@ -88,6 +89,21 @@ public interface BinanceApiService {
                                             @Query("newClientOrderId") String newClientOrderId, @Query("stopPrice") String stopPrice,
                                             @Query("icebergQty") String icebergQty, @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
                                             @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
+
+    // sinhlt added
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+    @POST("/api/v3/order/oco")
+    Call<NewOrderResponse> newOrderOCO(@Query("symbol") String symbol,
+                                       @Query("side") OrderSide side,
+                                       @Query("quantity") String quantity,
+                                       @Query("price") String price,
+                                       @Query("stopPrice") String stopPrice,
+                                       @Query("stopLimitPrice") String stopLimitPrice,
+                                       @Query("stopLimitTimeInForce") TimeInForce stopLimitTimeInForce,
+                                       @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
+                                       @Query("recvWindow") Long recvWindow,
+                                       @Query("timestamp") Long timestamp);
+    // sinhlt added
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @POST("/api/v3/order/test")

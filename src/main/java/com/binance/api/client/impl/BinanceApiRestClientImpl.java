@@ -132,6 +132,26 @@ public class BinanceApiRestClientImpl implements BinanceApiRestClient {
 	}
 
 	@Override
+	public NewOrderResponse newOrderOCO(NewOrder order) {
+		final Call<NewOrderResponse> call;
+
+		call = binanceApiService.newOrderOCO(
+				order.getSymbol(),
+				order.getSide(),
+				order.getQuantity(),
+				order.getPrice(),
+				order.getStopPrice(),
+				order.getStopLimitPrice(),
+				order.getTimeInForce(),
+				order.getNewOrderRespType(),
+				order.getRecvWindow(),
+				order.getTimestamp()
+		);
+
+		return executeSync(call);
+	}
+
+	@Override
 	public void newOrderTest(NewOrder order) {
 		executeSync(binanceApiService.newOrderTest(order.getSymbol(), order.getSide(), order.getType(),
 				order.getTimeInForce(), order.getQuantity(), order.getPrice(), order.getNewClientOrderId(),
