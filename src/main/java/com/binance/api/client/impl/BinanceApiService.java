@@ -52,11 +52,13 @@ public interface BinanceApiService {
     Call<List<AggTrade>> getAggTrades(@Query("symbol") String symbol, @Query("fromId") String fromId, @Query("limit") Integer limit,
                                       @Query("startTime") Long startTime, @Query("endTime") Long endTime);
 
-    @GET("/api/v1/klines")
+    // sinhlt changed v1 -> v3
+    @GET("/api/v3/klines")
     Call<List<Candlestick>> getCandlestickBars(@Query("symbol") String symbol, @Query("interval") String interval, @Query("limit") Integer limit,
                                                @Query("startTime") Long startTime, @Query("endTime") Long endTime);
 
-    @GET("/api/v1/ticker/24hr")
+    // sinhlt changed v1 -> v3
+    @GET("/api/v3/ticker/24hr")
     Call<TickerStatistics> get24HrPriceStatistics(@Query("symbol") String symbol);
 
     // sinhlt changed v1 -> v3
