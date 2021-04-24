@@ -4,6 +4,8 @@ import com.binance.api.client.BinanceApiError;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.exception.BinanceApiException;
 import com.binance.api.client.security.AuthenticationInterceptor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Dispatcher;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -24,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class BinanceApiServiceGenerator {
 
     private static final OkHttpClient sharedClient;
-    private static final Converter.Factory converterFactory = JacksonConverterFactory.create();
+    private static final Converter.Factory converterFactory;
 
     static {
         Dispatcher dispatcher = new Dispatcher();
@@ -34,6 +36,10 @@ public class BinanceApiServiceGenerator {
                 .dispatcher(dispatcher)
                 .pingInterval(20, TimeUnit.SECONDS)
                 .build();
+        // sinhlt changed
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
+        converterFactory = JacksonConverterFactory.create(mapper);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,12 +48,18 @@ public class BinanceApiServiceGenerator {
                     BinanceApiError.class, new Annotation[0], null);
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null, null);
+        return createService(serviceClass, null, null, BinanceApiConfig.getApiBaseUrl());
     }
 
+    // sinhlt added start
     public static <S> S createService(Class<S> serviceClass, String apiKey, String secret) {
+        return createService(serviceClass, apiKey, secret, BinanceApiConfig.getApiBaseUrl());
+    }
+    // sinhlt added end
+
+    public static <S> S createService(Class<S> serviceClass, String apiKey, String secret, String baseUrl) {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(BinanceApiConfig.getApiBaseUrl())
+                .baseUrl(baseUrl)
                 .addConverterFactory(converterFactory);
 
         if (StringUtils.isEmpty(apiKey) || StringUtils.isEmpty(secret)) {

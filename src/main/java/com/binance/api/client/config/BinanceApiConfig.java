@@ -35,6 +35,15 @@ public class BinanceApiConfig {
 		return String.format("https://api.%s", getBaseDomain());
 	}
 
+	// sinhlt start
+	/**
+	 * Future REST API base URL.
+	 */
+	public static String getFutureApiBaseUrl() {
+		return String.format("https://fapi.%s", getBaseDomain());
+	}
+	// sinhlt end
+
 	/**
 	 * Streaming API base URL.
 	 */

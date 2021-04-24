@@ -92,4 +92,12 @@ public class BinanceApiClientFactory {
   public BinanceApiSwapRestClient newSwapRestClient() {
     return new BinanceApiSwapRestClientImpl(apiKey, secret);
   }
+
+  // sinhlt added
+  /**
+   * Creates a new synchronous/blocking Future REST client.
+   */
+  public BinanceApiFutureRestClient newFutureRestClient() {
+    return new BinanceApiFutureRestClientImpl(apiKey, secret);
+  }
 }

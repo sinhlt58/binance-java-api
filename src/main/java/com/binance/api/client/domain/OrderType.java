@@ -11,10 +11,15 @@ public enum OrderType {
   MARKET,
   STOP_LOSS,
   STOP_LOSS_LIMIT,
-  TAKE_PROFIT,
+  TAKE_PROFIT, // future
   TAKE_PROFIT_LIMIT,
   LIMIT_MAKER,
-  // sinhlt added
-  OCO
-  // sinhlt added
+  // sinhlt start
+  OCO,
+  // future
+  STOP,
+  STOP_MARKET,
+  TAKE_PROFIT_MARKET,
+  TRAILING_STOP_MARKET
+  // sinhlt end
 }

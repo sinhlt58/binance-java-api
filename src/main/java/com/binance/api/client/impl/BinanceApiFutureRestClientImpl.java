@@ -1,0 +1,68 @@
+package com.binance.api.client.impl;
+
+import com.binance.api.client.BinanceApiFutureRestClient;
+import com.binance.api.client.config.BinanceApiConfig;
+import com.binance.api.client.domain.general.ExchangeFutureInfo;
+import com.binance.api.client.domain.general.ExchangeInfo;
+import com.binance.api.client.domain.market.Candlestick;
+import com.binance.api.client.domain.market.CandlestickInterval;
+import com.binance.api.client.domain.market.TickerPrice;
+import com.binance.api.client.domain.market.TickerStatistics;
+
+import java.util.List;
+
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.createService;
+import static com.binance.api.client.impl.BinanceApiServiceGenerator.executeSync;
+
+public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClient {
+    private final BinanceApiFutureService binanceApiFutureService;
+
+    public BinanceApiFutureRestClientImpl(String apiKey, String secret){
+        binanceApiFutureService = createService(BinanceApiFutureService.class, apiKey, secret, BinanceApiConfig.getFutureApiBaseUrl());
+    }
+
+    @Override
+    public void ping() {
+        executeSync(binanceApiFutureService.ping());
+    }
+
+    @Override
+    public ExchangeFutureInfo getExchangeInfo() {
+        return executeSync(binanceApiFutureService.getExchangeInfo());
+    }
+
+    @Override
+    public List<Candlestick> getCandlestickBars(String symbol, CandlestickInterval interval, Integer limit, Long startTime, Long endTime) {
+        return executeSync(binanceApiFutureService.getCandlestickBars(symbol, interval.getIntervalId(), limit, startTime, endTime));
+    }
+
+    @Override
+    public List<Candlestick> getCandlestickBars(String symbol, CandlestickInterval interval, Integer limit) {
+        return getCandlestickBars(symbol, interval, limit, null, null);
+    }
+
+    @Override
+    public List<Candlestick> getCandlestickBars(String symbol, CandlestickInterval interval) {
+        return getCandlestickBars(symbol, interval, null, null, null);
+    }
+
+    @Override
+    public TickerStatistics get24HrPriceStatistics(String symbol) {
+        return executeSync(binanceApiFutureService.get24HrPriceStatistics(symbol));
+    }
+
+    @Override
+    public List<TickerStatistics> getAll24HrPriceStatistics() {
+        return executeSync(binanceApiFutureService.getAll24HrPriceStatistics());
+    }
+
+    @Override
+    public TickerPrice getPrice(String symbol) {
+        return executeSync(binanceApiFutureService.getLatestPrice(symbol));
+    }
+
+    @Override
+    public List<TickerPrice> getAllPrices() {
+        return executeSync(binanceApiFutureService.getAllLatestPrices());
+    }
+}
