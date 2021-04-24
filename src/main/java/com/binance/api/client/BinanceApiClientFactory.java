@@ -100,4 +100,11 @@ public class BinanceApiClientFactory {
   public BinanceApiFutureRestClient newFutureRestClient() {
     return new BinanceApiFutureRestClientImpl(apiKey, secret);
   }
+
+  /**
+   * Creates a new future web socket client used for handling data streams.
+   */
+  public BinanceApiFutureWebSocketApi newFutureWebSocketClient() {
+    return new BinanceApiFutureWebSocketApiImpl(getSharedClient());
+  }
 }

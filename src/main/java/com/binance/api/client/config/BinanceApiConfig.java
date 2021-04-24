@@ -42,6 +42,10 @@ public class BinanceApiConfig {
 	public static String getFutureApiBaseUrl() {
 		return String.format("https://fapi.%s", getBaseDomain());
 	}
+
+	public static String getFutureStreamApiBaseUrl() {
+		return String.format("wss://fstream.%s/ws", getBaseDomain());
+	}
 	// sinhlt end
 
 	/**
