@@ -4,6 +4,7 @@ import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiFutureWebSocketApi;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.domain.event.CandlestickEvent;
+import com.binance.api.client.domain.event.UserDataUpdateEvent;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -28,6 +29,11 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
                 .map(s -> String.format("%s@kline_%s", s, interval.getIntervalId()))
                 .collect(Collectors.joining("/"));
         return createNewWebSocket(channel, new BinanceApiWebSocketListener<>(callback, CandlestickEvent.class));
+    }
+
+    @Override
+    public Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback) {
+        return createNewWebSocket(listenKey, new BinanceApiWebSocketListener<>(callback, UserDataUpdateEvent.class));
     }
 
     /**

@@ -2,6 +2,7 @@ package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
+import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.market.Candlestick;
@@ -64,5 +65,20 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     @Override
     public List<TickerPrice> getAllPrices() {
         return executeSync(binanceApiFutureService.getAllLatestPrices());
+    }
+
+    @Override
+    public ListenKey startUserDataStream() {
+        return executeSync(binanceApiFutureService.startUserDataStream());
+    }
+
+    @Override
+    public void keepAliveUserDataStream() {
+        executeSync(binanceApiFutureService.keepAliveUserDataStream());
+    }
+
+    @Override
+    public void closeUserDataStream() {
+        executeSync(binanceApiFutureService.closeAliveUserDataStream());
     }
 }

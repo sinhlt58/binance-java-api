@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.market.Candlestick;
@@ -70,4 +71,25 @@ public interface BinanceApiFutureRestClient {
      * Get Latest price for all symbols.
      */
     List<TickerPrice> getAllPrices();
+
+    // User stream endpoints
+
+    /**
+     * Start a new user data stream.
+     *
+     * @return a listen key that can be used with data streams
+     */
+    ListenKey startUserDataStream();
+
+    /**
+     * PING a user data stream to prevent a time out.
+     *
+     */
+    void keepAliveUserDataStream();
+
+    /**
+     * Close out a new user data stream.
+     *
+     */
+    void closeUserDataStream();
 }

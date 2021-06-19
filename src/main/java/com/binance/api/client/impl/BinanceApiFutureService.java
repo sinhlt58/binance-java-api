@@ -1,12 +1,13 @@
 package com.binance.api.client.impl;
 
+import com.binance.api.client.constant.BinanceApiConstants;
+import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.market.Candlestick;
 import com.binance.api.client.domain.market.TickerPrice;
 import com.binance.api.client.domain.market.TickerStatistics;
 import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 import java.util.List;
 
@@ -47,4 +48,18 @@ public interface BinanceApiFutureService {
             @Query("startTime") Long startTime,
             @Query("endTime") Long endTime
     );
+
+    // User stream endpoints
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+    @POST("/fapi/v1/listenKey")
+    Call<ListenKey> startUserDataStream();
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+    @PUT("/fapi/v1/listenKey")
+    Call<Void> keepAliveUserDataStream();
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
+    @DELETE("/fapi/v1/listenKey")
+    Call<Void> closeAliveUserDataStream();
 }
