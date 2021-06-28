@@ -50,11 +50,11 @@ public class BinanceApiConfig {
 		return String.format("wss://fstream.%s/ws", getBaseDomain());
 	}
 	public static String getTestnetFutureApiBaseUrl() {
-		return String.format("https://testnet.%s", getBaseDomain());
+		return String.format("https://testnet.%s", TESTNET_DOMAIN);
 	}
 
 	public static String getTestnetFutureStreamApiBaseUrl() {
-		return String.format("wss://stream.%s/ws", getBaseDomain());
+		return String.format("wss://stream.%s/ws", TESTNET_DOMAIN);
 	}
 	// sinhlt end
 
