@@ -4,7 +4,6 @@ import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
-import com.binance.api.client.domain.general.ExchangeInfo;
 import com.binance.api.client.domain.market.Candlestick;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import com.binance.api.client.domain.market.TickerPrice;
@@ -19,7 +18,11 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     private final BinanceApiFutureService binanceApiFutureService;
 
     public BinanceApiFutureRestClientImpl(String apiKey, String secret){
-        binanceApiFutureService = createService(BinanceApiFutureService.class, apiKey, secret, BinanceApiConfig.getFutureApiBaseUrl());
+        this(apiKey, secret, BinanceApiConfig.getFutureApiBaseUrl());
+    }
+
+    public BinanceApiFutureRestClientImpl(String apiKey, String secret, String baseUrl){
+        binanceApiFutureService = createService(BinanceApiFutureService.class, apiKey, secret, baseUrl);
     }
 
     @Override

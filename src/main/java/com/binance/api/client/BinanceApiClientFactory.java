@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.impl.*;
 
 import static com.binance.api.client.impl.BinanceApiServiceGenerator.getSharedClient;
@@ -93,7 +94,7 @@ public class BinanceApiClientFactory {
     return new BinanceApiSwapRestClientImpl(apiKey, secret);
   }
 
-  // sinhlt added
+  // sinhlt start
   /**
    * Creates a new synchronous/blocking Future REST client.
    */
@@ -107,4 +108,18 @@ public class BinanceApiClientFactory {
   public BinanceApiFutureWebSocketApi newFutureWebSocketClient() {
     return new BinanceApiFutureWebSocketApiImpl(getSharedClient());
   }
+  /**
+   * Creates a new synchronous/blocking Future REST client.
+   */
+  public BinanceApiFutureRestClient newTestnetFutureRestClient() {
+    return new BinanceApiFutureRestClientImpl(apiKey, secret, BinanceApiConfig.getTestnetFutureApiBaseUrl());
+  }
+
+  /**
+   * Creates a new future web socket client used for handling data streams.
+   */
+  public BinanceApiFutureWebSocketApi newTestnetFutureWebSocketClient() {
+    return new BinanceApiFutureWebSocketApiImpl(getSharedClient(), BinanceApiConfig.getTestnetFutureStreamApiBaseUrl());
+  }
+  // sinhlt end
 }

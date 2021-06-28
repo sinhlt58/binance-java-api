@@ -9,6 +9,9 @@ public class BinanceApiConfig {
 	 * Base domain for URLs.
 	 */
 	private static String BASE_DOMAIN = "binance.com";
+	// sinhlt start
+	private static String TESTNET_DOMAIN = "binancefuture.com";
+	// sinhlt end
 
 	/**
 	 * Set the URL base domain name (e.g., binance.com).
@@ -45,6 +48,13 @@ public class BinanceApiConfig {
 
 	public static String getFutureStreamApiBaseUrl() {
 		return String.format("wss://fstream.%s/ws", getBaseDomain());
+	}
+	public static String getTestnetFutureApiBaseUrl() {
+		return String.format("https://testnet.%s", getBaseDomain());
+	}
+
+	public static String getTestnetFutureStreamApiBaseUrl() {
+		return String.format("wss://stream.%s/ws", getBaseDomain());
 	}
 	// sinhlt end
 

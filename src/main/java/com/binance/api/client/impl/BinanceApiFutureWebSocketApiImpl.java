@@ -17,9 +17,15 @@ import java.util.stream.Collectors;
 
 public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSocketApi {
     private final OkHttpClient client;
+    private final String baseUrl;
 
     public BinanceApiFutureWebSocketApiImpl(OkHttpClient client){
+        this(client,  BinanceApiConfig.getFutureStreamApiBaseUrl());
+    }
+
+    public BinanceApiFutureWebSocketApiImpl(OkHttpClient client, String baseUrl){
         this.client = client;
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -44,8 +50,8 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
 
     }
 
-    private Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
-        String streamingUrl = String.format("%s/%s", BinanceApiConfig.getFutureStreamApiBaseUrl(), channel);
+    protected Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
+        String streamingUrl = String.format("%s/%s", this.baseUrl, channel);
         Request request = new Request.Builder().url(streamingUrl).build();
         final WebSocket webSocket = client.newWebSocket(request, listener);
         return () -> {
