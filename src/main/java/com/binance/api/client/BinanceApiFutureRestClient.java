@@ -92,4 +92,7 @@ public interface BinanceApiFutureRestClient {
      *
      */
     void closeUserDataStream();
+
+    // Orders, positions API
+
 }
