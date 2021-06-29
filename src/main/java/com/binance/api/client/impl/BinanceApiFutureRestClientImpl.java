@@ -2,6 +2,9 @@ package com.binance.api.client.impl;
 
 import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
+import com.binance.api.client.constant.BinanceApiConstants;
+import com.binance.api.client.domain.account.NewFutureOrder;
+import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.market.Candlestick;
@@ -84,4 +87,22 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     public void closeUserDataStream() {
         executeSync(binanceApiFutureService.closeAliveUserDataStream());
     }
+
+    @Override
+    public List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice) {
+        return executeSync(binanceApiFutureService.createBatchOrders(
+                NewFutureOrder.openLongPositionString(symbol, quantity, price, takeProfitPrice, stopLossPrice),
+                BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+                System.currentTimeMillis()));
+    }
+
+    @Override
+    public List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice) {
+        return executeSync(binanceApiFutureService.createBatchOrders(
+                NewFutureOrder.openShortPositionString(symbol, quantity, price, takeProfitPrice, stopLossPrice),
+                BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+                System.currentTimeMillis()));
+    }
+
+
 }

@@ -3,6 +3,8 @@ package com.binance.api.client.domain.account;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
  * A trade order to enter or exit a position.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NewFutureOrder {
     private String symbol;
     private OrderSide side;
@@ -27,17 +30,26 @@ public class NewFutureOrder {
     private NewOrderResponseType newOrderRespType;
     private TimeInForce timeInForce;
     private Long recvWindow;
-    private long timestamp;
+    private Long timestamp;
 
-    public NewFutureOrder(){
+    public static ObjectMapper objectMapper = new ObjectMapper();
+
+    public NewFutureOrder(String symbol, boolean isForBatch){
+        this.symbol = symbol;
         this.timeInForce = TimeInForce.GTC;
         this.newOrderRespType = NewOrderResponseType.RESULT;
-        this.timestamp = System.currentTimeMillis();
-        this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
+        if (!isForBatch){
+            this.timestamp = System.currentTimeMillis();
+            this.recvWindow = BinanceApiConstants.DEFAULT_RECEIVING_WINDOW;
+        }
     }
 
-    public static NewFutureOrder limitLongOrder(String quantity, String price){
-        NewFutureOrder order = new NewFutureOrder();
+    public NewFutureOrder(String symbol){
+        this(symbol, true);
+    }
+
+    public static NewFutureOrder limitLongOrder(String symbol, String quantity, String price){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.BUY;
@@ -47,8 +59,8 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitLongTakeProfitOrder(String quantity, String price, String stopPrice){
-        NewFutureOrder order = new NewFutureOrder();
+    public static NewFutureOrder limitLongTakeProfitOrder(String symbol, String quantity, String price, String stopPrice){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.SELL;
@@ -60,8 +72,8 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitLongStopLossOrder(String quantity, String price, String stopPrice){
-        NewFutureOrder order = new NewFutureOrder();
+    public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String price, String stopPrice){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.SELL;
@@ -73,8 +85,8 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortOrder(String quantity, String price){
-        NewFutureOrder order = new NewFutureOrder();
+    public static NewFutureOrder limitShortOrder(String symbol, String quantity, String price){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.SELL;
@@ -84,8 +96,8 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortTakeProfitOrder(String quantity, String price, String stopPrice){
-        NewFutureOrder order = new NewFutureOrder();
+    public static NewFutureOrder limitShortTakeProfitOrder(String symbol, String quantity, String price, String stopPrice){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.BUY;
@@ -97,8 +109,8 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortStopLossOrder(String quantity, String price, String stopPrice){
-        NewFutureOrder order = new NewFutureOrder();
+    public static NewFutureOrder limitShortStopLossOrder(String symbol, String quantity, String price, String stopPrice){
+        NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.BUY;
@@ -110,21 +122,151 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static List<NewFutureOrder> openLongPosition(String quantity, String price, String takeProfitPrice, String stopLossPrice){
+    public static String openLongPositionString(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
-        orders.add(limitLongOrder(quantity, price));
-        orders.add(limitLongStopLossOrder(quantity, price, stopLossPrice));
-        orders.add(limitLongTakeProfitOrder(quantity, price, takeProfitPrice));
+        orders.add(limitLongOrder(symbol, quantity, price));
+        orders.add(limitLongStopLossOrder(symbol, quantity, price, stopLossPrice));
+        orders.add(limitLongTakeProfitOrder(symbol, quantity, price, takeProfitPrice));
 
-        return orders;
+        try{
+            return objectMapper.writeValueAsString(orders);
+        } catch (Exception e){
+            return null;
+        }
     }
 
-    public static List<NewFutureOrder> openShortPosition(String quantity, String price, String takeProfitPrice, String stopLossPrice){
+    public static String openShortPositionString(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
-        orders.add(limitShortOrder(quantity, price));
-        orders.add(limitShortStopLossOrder(quantity, price, stopLossPrice));
-        orders.add(limitShortTakeProfitOrder(quantity, price, takeProfitPrice));
+        orders.add(limitShortOrder(symbol, quantity, price));
+        orders.add(limitShortStopLossOrder(symbol, quantity, price, stopLossPrice));
+        orders.add(limitShortTakeProfitOrder(symbol, quantity, price, takeProfitPrice));
 
-        return orders;
+        try{
+            return objectMapper.writeValueAsString(orders);
+        } catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public static void main(String[] args){
+        // tests
+        String p1 = openLongPositionString("BTCUSDT","0.2", "34686.01", "35000.02", "33000.01");
+        String p2 = openShortPositionString("BTCUSDT","0.2", "34686.01", "33000.01", "35000.02");
+
+        System.out.println(p1);
+        System.out.println(p2);
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public OrderSide getSide() {
+        return side;
+    }
+
+    public void setSide(OrderSide side) {
+        this.side = side;
+    }
+
+    public PositionSide getPositionSide() {
+        return positionSide;
+    }
+
+    public void setPositionSide(PositionSide positionSide) {
+        this.positionSide = positionSide;
+    }
+
+    public OrderType getType() {
+        return type;
+    }
+
+    public void setType(OrderType type) {
+        this.type = type;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getStopPrice() {
+        return stopPrice;
+    }
+
+    public void setStopPrice(String stopPrice) {
+        this.stopPrice = stopPrice;
+    }
+
+    public String getClosePrice() {
+        return closePrice;
+    }
+
+    public void setClosePrice(String closePrice) {
+        this.closePrice = closePrice;
+    }
+
+    public PriceProtect getPriceProtect() {
+        return priceProtect;
+    }
+
+    public void setPriceProtect(PriceProtect priceProtect) {
+        this.priceProtect = priceProtect;
+    }
+
+    public String getNewClientOrderId() {
+        return newClientOrderId;
+    }
+
+    public void setNewClientOrderId(String newClientOrderId) {
+        this.newClientOrderId = newClientOrderId;
+    }
+
+    public NewOrderResponseType getNewOrderRespType() {
+        return newOrderRespType;
+    }
+
+    public void setNewOrderRespType(NewOrderResponseType newOrderRespType) {
+        this.newOrderRespType = newOrderRespType;
+    }
+
+    public TimeInForce getTimeInForce() {
+        return timeInForce;
+    }
+
+    public void setTimeInForce(TimeInForce timeInForce) {
+        this.timeInForce = timeInForce;
+    }
+
+    public Long getRecvWindow() {
+        return recvWindow;
+    }
+
+    public void setRecvWindow(Long recvWindow) {
+        this.recvWindow = recvWindow;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

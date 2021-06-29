@@ -1,6 +1,12 @@
 package com.binance.api.client.impl;
 
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.binance.api.client.domain.OrderSide;
+import com.binance.api.client.domain.OrderType;
+import com.binance.api.client.domain.TimeInForce;
+import com.binance.api.client.domain.account.NewFutureOrderResponse;
+import com.binance.api.client.domain.account.NewOrderResponse;
+import com.binance.api.client.domain.account.NewOrderResponseType;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.market.Candlestick;
@@ -62,4 +68,11 @@ public interface BinanceApiFutureService {
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER)
     @DELETE("/fapi/v1/listenKey")
     Call<Void> closeAliveUserDataStream();
+
+    // orders, positions
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @POST("/fapi/v1/batchOrders")
+    Call<List<NewFutureOrderResponse>> createBatchOrders(@Query("batchOrders") String batchOrders,
+                                                         @Query("recvWindow") Long recvWindow,
+                                                         @Query("timestamp") Long timestamp);
 }

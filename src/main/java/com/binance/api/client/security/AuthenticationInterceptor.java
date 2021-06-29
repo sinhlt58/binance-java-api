@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.stream.StreamSupport;
 
 /**
  * A request interceptor that injects the API Key Header into requests, and signs messages, whenever required.
@@ -53,6 +54,7 @@ public class AuthenticationInterceptor implements Interceptor {
 
         // Build new request after adding the necessary authentication information
         Request newRequest = newRequestBuilder.build();
+        System.out.println("URL: " + newRequest.url());
         return chain.proceed(newRequest);
     }
 

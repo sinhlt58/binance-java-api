@@ -1,5 +1,7 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.account.NewFutureOrder;
+import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.general.ExchangeInfo;
@@ -94,5 +96,6 @@ public interface BinanceApiFutureRestClient {
     void closeUserDataStream();
 
     // Orders, positions API
-
+    List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice);
+    List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice);
 }
