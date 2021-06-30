@@ -1,7 +1,13 @@
 package com.binance.api.client.domain.account;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewFutureOrderResponse {
@@ -10,6 +16,9 @@ public class NewFutureOrderResponse {
     private PositionSide positionSide;
     private OrderType type;
     private String newClientOrderId;
+
+    private int code;
+    private String msg;
 
     public String getSymbol() {
         return symbol;
@@ -49,5 +58,34 @@ public class NewFutureOrderResponse {
 
     public void setNewClientOrderId(String newClientOrderId) {
         this.newClientOrderId = newClientOrderId;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+                .append("symbol", symbol)
+                .append("side", side)
+                .append("positionSide", positionSide)
+                .append("type", type)
+                .append("newClientOrderId", newClientOrderId)
+                .append("code", code)
+                .append("msg", msg)
+                .toString();
     }
 }

@@ -44,7 +44,7 @@ public class AuthenticationInterceptor implements Interceptor {
 
         // Endpoint requires signing the payload
         if (isSignatureRequired) {
-            String payload = original.url().query();
+            String payload = original.url().encodedQuery();
             if (!StringUtils.isEmpty(payload)) {
                 String signature = HmacSHA256Signer.sign(payload, secret);
                 HttpUrl signedUrl = original.url().newBuilder().addQueryParameter("signature", signature).build();
@@ -54,7 +54,6 @@ public class AuthenticationInterceptor implements Interceptor {
 
         // Build new request after adding the necessary authentication information
         Request newRequest = newRequestBuilder.build();
-        System.out.println("URL: " + newRequest.url());
         return chain.proceed(newRequest);
     }
 

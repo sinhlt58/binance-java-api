@@ -89,17 +89,17 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     }
 
     @Override
-    public List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice) {
+    public List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice) {
         return executeSync(binanceApiFutureService.createBatchOrders(
-                NewFutureOrder.openLongPositionString(symbol, quantity, price, takeProfitPrice, stopLossPrice),
+                NewFutureOrder.openLongPositionString(symbol, quantity, price, stopLossPrice, takeProfitPrice),
                 BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
                 System.currentTimeMillis()));
     }
 
     @Override
-    public List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice) {
+    public List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice) {
         return executeSync(binanceApiFutureService.createBatchOrders(
-                NewFutureOrder.openShortPositionString(symbol, quantity, price, takeProfitPrice, stopLossPrice),
+                NewFutureOrder.openShortPositionString(symbol, quantity, price, stopLossPrice, takeProfitPrice),
                 BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
                 System.currentTimeMillis()));
     }

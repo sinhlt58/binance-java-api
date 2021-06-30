@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,28 +60,26 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitLongTakeProfitOrder(String symbol, String quantity, String price, String stopPrice){
+    public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String price, String stopPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
-        order.price = price;
+        order.price = stopPrice;
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.LONG;
-        order.type = OrderType.TAKE_PROFIT;
+        order.type = OrderType.STOP;
         order.stopPrice = stopPrice;
-        order.priceProtect = PriceProtect.TRUE;
 
         return order;
     }
 
-    public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String price, String stopPrice){
+    public static NewFutureOrder limitLongTakeProfitOrder(String symbol, String quantity, String price, String takeProfitPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
-        order.price = price;
+        order.price = takeProfitPrice;
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.LONG;
-        order.type = OrderType.STOP_LOSS;
-        order.stopPrice = stopPrice;
-        order.priceProtect = PriceProtect.TRUE;
+        order.type = OrderType.TAKE_PROFIT;
+        order.stopPrice = takeProfitPrice;
 
         return order;
     }
@@ -96,33 +95,31 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortTakeProfitOrder(String symbol, String quantity, String price, String stopPrice){
-        NewFutureOrder order = new NewFutureOrder(symbol);
-        order.quantity = quantity;
-        order.price = price;
-        order.side = OrderSide.BUY;
-        order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.TAKE_PROFIT;
-        order.stopPrice = stopPrice;
-        order.priceProtect = PriceProtect.TRUE;
-
-        return order;
-    }
-
     public static NewFutureOrder limitShortStopLossOrder(String symbol, String quantity, String price, String stopPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
-        order.price = price;
+        order.price = stopPrice;
         order.side = OrderSide.BUY;
         order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.STOP_LOSS;
+        order.type = OrderType.STOP;
         order.stopPrice = stopPrice;
-        order.priceProtect = PriceProtect.TRUE;
 
         return order;
     }
 
-    public static String openLongPositionString(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice){
+    public static NewFutureOrder limitShortTakeProfitOrder(String symbol, String quantity, String price, String takeProfitPrice){
+        NewFutureOrder order = new NewFutureOrder(symbol);
+        order.quantity = quantity;
+        order.price = takeProfitPrice;
+        order.side = OrderSide.BUY;
+        order.positionSide = PositionSide.SHORT;
+        order.type = OrderType.TAKE_PROFIT;
+        order.stopPrice = takeProfitPrice;
+
+        return order;
+    }
+
+    public static String openLongPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
         orders.add(limitLongOrder(symbol, quantity, price));
         orders.add(limitLongStopLossOrder(symbol, quantity, price, stopLossPrice));
@@ -135,7 +132,7 @@ public class NewFutureOrder {
         }
     }
 
-    public static String openShortPositionString(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice){
+    public static String openShortPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
         orders.add(limitShortOrder(symbol, quantity, price));
         orders.add(limitShortStopLossOrder(symbol, quantity, price, stopLossPrice));
@@ -151,8 +148,8 @@ public class NewFutureOrder {
 
     public static void main(String[] args){
         // tests
-        String p1 = openLongPositionString("BTCUSDT","0.2", "34686.01", "35000.02", "33000.01");
-        String p2 = openShortPositionString("BTCUSDT","0.2", "34686.01", "33000.01", "35000.02");
+        String p1 = openLongPositionString("BTCUSDT", "0.003", "30000.00", "31000.00", "29000.00");
+        String p2 = openShortPositionString("BTCUSDT", "0.0017", "60000.00", "59000.00", "61000.00");
 
         System.out.println(p1);
         System.out.println(p2);

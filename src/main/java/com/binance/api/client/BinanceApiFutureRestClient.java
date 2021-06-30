@@ -96,6 +96,6 @@ public interface BinanceApiFutureRestClient {
     void closeUserDataStream();
 
     // Orders, positions API
-    List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice);
-    List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String takeProfitPrice, String stopLossPrice);
+    List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
+    List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
 }
