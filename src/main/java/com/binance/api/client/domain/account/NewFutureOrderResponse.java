@@ -15,7 +15,7 @@ public class NewFutureOrderResponse {
     private OrderSide side;
     private PositionSide positionSide;
     private OrderType type;
-    private String newClientOrderId;
+    private String clientOrderId;
 
     private int code;
     private String msg;
@@ -52,12 +52,12 @@ public class NewFutureOrderResponse {
         this.type = type;
     }
 
-    public String getNewClientOrderId() {
-        return newClientOrderId;
+    public String getClientOrderId() {
+        return clientOrderId;
     }
 
-    public void setNewClientOrderId(String newClientOrderId) {
-        this.newClientOrderId = newClientOrderId;
+    public void setClientOrderId(String clientOrderId) {
+        this.clientOrderId = clientOrderId;
     }
 
     public int getCode() {
@@ -83,7 +83,7 @@ public class NewFutureOrderResponse {
                 .append("side", side)
                 .append("positionSide", positionSide)
                 .append("type", type)
-                .append("newClientOrderId", newClientOrderId)
+                .append("clientOrderId", clientOrderId)
                 .append("code", code)
                 .append("msg", msg)
                 .toString();

@@ -56,6 +56,7 @@ public class NewFutureOrder {
         order.side = OrderSide.BUY;
         order.positionSide = PositionSide.LONG;
         order.type = OrderType.LIMIT;
+        order.newClientOrderId = "LIMITLONG" + symbol;
 
         return order;
     }
@@ -68,6 +69,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = OrderType.STOP;
         order.stopPrice = stopPrice;
+        order.newClientOrderId = "STOPLOSSLONG" + symbol;
 
         return order;
     }
@@ -80,6 +82,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = OrderType.TAKE_PROFIT;
         order.stopPrice = takeProfitPrice;
+        order.newClientOrderId = "TAKEPROFITLONG" + symbol;
 
         return order;
     }
@@ -91,6 +94,7 @@ public class NewFutureOrder {
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.SHORT;
         order.type = OrderType.LIMIT;
+        order.newClientOrderId = "LIMITSHORT" + symbol;
 
         return order;
     }
@@ -103,6 +107,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = OrderType.STOP;
         order.stopPrice = stopPrice;
+        order.newClientOrderId = "STOPLOSSSHORT" + symbol;
 
         return order;
     }
@@ -115,6 +120,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = OrderType.TAKE_PROFIT;
         order.stopPrice = takeProfitPrice;
+        order.newClientOrderId = "TAKEPROFITSHORT" + symbol;
 
         return order;
     }
