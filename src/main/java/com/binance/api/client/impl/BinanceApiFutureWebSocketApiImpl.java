@@ -52,6 +52,7 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
 
     protected Closeable createNewWebSocket(String channel, BinanceApiWebSocketListener<?> listener) {
         String streamingUrl = String.format("%s/%s", this.baseUrl, channel);
+        System.out.println("streamingUrl: " + streamingUrl);
         Request request = new Request.Builder().url(streamingUrl).build();
         final WebSocket webSocket = client.newWebSocket(request, listener);
         return () -> {
