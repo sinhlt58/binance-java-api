@@ -75,4 +75,12 @@ public interface BinanceApiFutureService {
     Call<List<NewFutureOrderResponse>> createBatchOrders(@Query("batchOrders") String batchOrders,
                                                          @Query("recvWindow") Long recvWindow,
                                                          @Query("timestamp") Long timestamp);
+
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @DELETE("/fapi/v1/order")
+    Call<NewFutureOrderResponse> cancelOrder(@Query("symbol") String symbol,
+                                             @Query("origClientOrderId") String origClientOrderId,
+                                             @Query("recvWindow") Long recvWindow,
+                                             @Query("timestamp") Long timestamp);
+
 }

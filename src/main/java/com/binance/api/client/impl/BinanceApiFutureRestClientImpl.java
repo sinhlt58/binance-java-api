@@ -104,5 +104,8 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
                 System.currentTimeMillis()));
     }
 
-
+    @Override
+    public NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId) {
+        return executeSync(binanceApiFutureService.cancelOrder(symbol, origClientOrderId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+    }
 }
