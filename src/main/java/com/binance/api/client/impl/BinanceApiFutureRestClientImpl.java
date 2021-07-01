@@ -108,4 +108,58 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     public NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId) {
         return executeSync(binanceApiFutureService.cancelOrder(symbol, origClientOrderId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
     }
+
+    @Override
+    public NewFutureOrderResponse placeLimitLongOrder(String symbol, String quantity, String price) {
+        NewFutureOrder order = NewFutureOrder.limitLongOrder(symbol, quantity, price);
+        return executeSync(binanceApiFutureService.newOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getTimeInForce(),
+                order.getQuantity(),
+                order.getPrice(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public NewFutureOrderResponse placeLimitShortOrder(String symbol, String quantity, String price) {
+        NewFutureOrder order = NewFutureOrder.limitShortOrder(symbol, quantity, price);
+        return executeSync(binanceApiFutureService.newOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getTimeInForce(),
+                order.getQuantity(),
+                order.getPrice(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public List<NewFutureOrderResponse> placeLimitLongTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice) {
+        return executeSync(binanceApiFutureService.createBatchOrders(
+                NewFutureOrder.limitLongTakeProfitAndStopLossOrdersString(symbol, quantity, stopLossPrice, takeProfitPrice),
+                BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public List<NewFutureOrderResponse> placeLimitShortTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice) {
+        return executeSync(binanceApiFutureService.createBatchOrders(
+                NewFutureOrder.limitShortTakeProfitAndStopLossOrdersString(symbol, quantity, stopLossPrice, takeProfitPrice),
+                BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+                System.currentTimeMillis()
+        ));
+    }
 }

@@ -1,7 +1,9 @@
 package com.binance.api.client.domain.event.future;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FutureEventUserData {
@@ -16,6 +18,18 @@ public class FutureEventUserData {
 
     private int code;
     private String msg;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+                .append("eventType", eventType)
+                .append("eventTime", eventTime)
+                .append("transactionTime", transactionTime)
+                .append("orderTradeUpdate", orderTradeUpdate)
+                .append("code", code)
+                .append("msg", msg)
+                .toString();
+    }
 
     public FutureEventUserType getEventType() {
         return eventType;

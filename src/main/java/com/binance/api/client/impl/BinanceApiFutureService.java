@@ -3,6 +3,7 @@ package com.binance.api.client.impl;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
+import com.binance.api.client.domain.PositionSide;
 import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.account.NewOrderResponse;
@@ -70,17 +71,31 @@ public interface BinanceApiFutureService {
     Call<Void> closeAliveUserDataStream();
 
     // orders, positions
-    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
     @POST("/fapi/v1/batchOrders")
     Call<List<NewFutureOrderResponse>> createBatchOrders(@Query("batchOrders") String batchOrders,
                                                          @Query("recvWindow") Long recvWindow,
                                                          @Query("timestamp") Long timestamp);
 
-    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_APIKEY_HEADER, BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
+    @Headers({BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER})
     @DELETE("/fapi/v1/order")
     Call<NewFutureOrderResponse> cancelOrder(@Query("symbol") String symbol,
                                              @Query("origClientOrderId") String origClientOrderId,
                                              @Query("recvWindow") Long recvWindow,
                                              @Query("timestamp") Long timestamp);
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+    @POST("/fapi/v1/order")
+    Call<NewFutureOrderResponse> newOrder(@Query("symbol") String symbol,
+                                        @Query("side") OrderSide side,
+                                        @Query("positionSide") PositionSide positionSide,
+                                        @Query("type") OrderType type,
+                                        @Query("timeInForce") TimeInForce timeInForce,
+                                        @Query("quantity") String quantity,
+                                        @Query("price") String price,
+                                        @Query("newClientOrderId") String newClientOrderId,
+                                        @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
+                                        @Query("recvWindow") Long recvWindow,
+                                        @Query("timestamp") Long timestamp);
 
 }

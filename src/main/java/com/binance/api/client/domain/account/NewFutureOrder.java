@@ -61,7 +61,7 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String price, String stopPrice){
+    public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String stopPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = stopPrice;
@@ -74,7 +74,7 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitLongTakeProfitOrder(String symbol, String quantity, String price, String takeProfitPrice){
+    public static NewFutureOrder limitLongTakeProfitOrder(String symbol, String quantity, String takeProfitPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = takeProfitPrice;
@@ -99,7 +99,7 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortStopLossOrder(String symbol, String quantity, String price, String stopPrice){
+    public static NewFutureOrder limitShortStopLossOrder(String symbol, String quantity, String stopPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = stopPrice;
@@ -112,7 +112,7 @@ public class NewFutureOrder {
         return order;
     }
 
-    public static NewFutureOrder limitShortTakeProfitOrder(String symbol, String quantity, String price, String takeProfitPrice){
+    public static NewFutureOrder limitShortTakeProfitOrder(String symbol, String quantity, String takeProfitPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = takeProfitPrice;
@@ -128,22 +128,38 @@ public class NewFutureOrder {
     public static String openLongPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
         orders.add(limitLongOrder(symbol, quantity, price));
-        orders.add(limitLongStopLossOrder(symbol, quantity, price, stopLossPrice));
-        orders.add(limitLongTakeProfitOrder(symbol, quantity, price, takeProfitPrice));
+        orders.add(limitLongStopLossOrder(symbol, quantity, stopLossPrice));
+        orders.add(limitLongTakeProfitOrder(symbol, quantity, takeProfitPrice));
 
-        try{
-            return objectMapper.writeValueAsString(orders);
-        } catch (Exception e){
-            return null;
-        }
+        return ordersToString(orders);
     }
 
     public static String openShortPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
         orders.add(limitShortOrder(symbol, quantity, price));
-        orders.add(limitShortStopLossOrder(symbol, quantity, price, stopLossPrice));
-        orders.add(limitShortTakeProfitOrder(symbol, quantity, price, takeProfitPrice));
+        orders.add(limitShortStopLossOrder(symbol, quantity, stopLossPrice));
+        orders.add(limitShortTakeProfitOrder(symbol, quantity, takeProfitPrice));
 
+        return ordersToString(orders);
+    }
+
+    public static String limitLongTakeProfitAndStopLossOrdersString(String symbol, String quantity, String stopLossPrice, String takeProfitPrice){
+        List<NewFutureOrder> orders = new ArrayList<>();
+        orders.add(limitLongStopLossOrder(symbol, quantity, stopLossPrice));
+        orders.add(limitLongTakeProfitOrder(symbol, quantity, takeProfitPrice));
+
+        return ordersToString(orders);
+    }
+
+    public static String limitShortTakeProfitAndStopLossOrdersString(String symbol, String quantity, String stopLossPrice, String takeProfitPrice){
+        List<NewFutureOrder> orders = new ArrayList<>();
+        orders.add(limitShortStopLossOrder(symbol, quantity, stopLossPrice));
+        orders.add(limitShortTakeProfitOrder(symbol, quantity, takeProfitPrice));
+
+        return ordersToString(orders);
+    }
+
+    public static String ordersToString(List<NewFutureOrder> orders){
         try{
             return objectMapper.writeValueAsString(orders);
         } catch (Exception e){

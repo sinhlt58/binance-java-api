@@ -1,8 +1,10 @@
 package com.binance.api.client.domain.event.future;
 
+import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FutureEventOrderTradeUpdate {
@@ -32,6 +34,24 @@ public class FutureEventOrderTradeUpdate {
 
     @JsonProperty("rp")
     String realizedProfit;
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this, BinanceApiConstants.TO_STRING_BUILDER_STYLE)
+                .append("symbol", symbol)
+                .append("clientOrderId", clientOrderId)
+                .append("side", side)
+                .append("orderType", orderType)
+                .append("positionSide", positionSide)
+                .append("orderStatus", orderStatus)
+                .append("timeInForce", timeInForce)
+                .append("originalQuantity", originalQuantity)
+                .append("originalPrice", originalPrice)
+                .append("averagePrice", averagePrice)
+                .append("stopPrice", stopPrice)
+                .append("realizedProfit", realizedProfit)
+                .toString();
+    }
 
     public String getSymbol() {
         return symbol;
