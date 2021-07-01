@@ -5,6 +5,7 @@ import com.binance.api.client.BinanceApiFutureWebSocketApi;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.domain.event.CandlestickEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
+import com.binance.api.client.domain.event.future.FutureEventUserData;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -38,8 +39,8 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
     }
 
     @Override
-    public Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback) {
-        return createNewWebSocket(listenKey, new BinanceApiWebSocketListener<>(callback, UserDataUpdateEvent.class));
+    public Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<FutureEventUserData> callback) {
+        return createNewWebSocket(listenKey, new BinanceApiWebSocketListener<>(callback, FutureEventUserData.class));
     }
 
     /**

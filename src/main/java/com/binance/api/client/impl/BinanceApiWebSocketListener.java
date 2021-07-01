@@ -37,27 +37,21 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
   @Override
   public void onMessage(WebSocket webSocket, String text) {
     try {
-      System.out.println("onMessage: " + text);
       T event = objectReader.readValue(text);
       callback.onResponse(event);
     } catch (IOException e) {
-      System.out.println("onMessage catch");
       throw new BinanceApiException(e);
     }
   }
 
   @Override
   public void onClosing(final WebSocket webSocket, final int code, final String reason) {
-    System.out.println("onClosing: " + reason);
     closing = true;
   }
 
   @Override
   public void onFailure(WebSocket webSocket, Throwable t, Response response) {
-    System.out.println("Throwable: " + t.getMessage());
-    System.out.println("Throwable: " + t.getCause());
     if (!closing) {
-      System.out.println("onFailure 222222");
       callback.onFailure(t);
     }
   }

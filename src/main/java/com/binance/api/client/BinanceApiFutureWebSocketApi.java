@@ -2,6 +2,7 @@ package com.binance.api.client;
 
 import com.binance.api.client.domain.event.CandlestickEvent;
 import com.binance.api.client.domain.event.UserDataUpdateEvent;
+import com.binance.api.client.domain.event.future.FutureEventUserData;
 import com.binance.api.client.domain.market.CandlestickInterval;
 
 import java.io.Closeable;
@@ -24,5 +25,5 @@ public interface BinanceApiFutureWebSocketApi extends Closeable {
      * @param callback  the callback to call on new events
      * @return a {@link Closeable} that allows the underlying web socket to be closed.
      */
-    Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<UserDataUpdateEvent> callback);
+    Closeable onUserDataUpdateEvent(String listenKey, BinanceApiCallback<FutureEventUserData> callback);
 }
