@@ -162,4 +162,40 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
                 System.currentTimeMillis()
         ));
     }
+
+    @Override
+    public NewFutureOrderResponse placeCloseLimitLongOrder(String symbol, String quantity, String price) {
+        NewFutureOrder order = NewFutureOrder.closeLimitLongOrder(symbol, quantity, price);
+        return executeSync(binanceApiFutureService.newOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getTimeInForce(),
+                order.getQuantity(),
+                order.getPrice(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public NewFutureOrderResponse placeCloseLimitShortOrder(String symbol, String quantity, String price) {
+        NewFutureOrder order = NewFutureOrder.closeLimitShortOrder(symbol, quantity, price);
+        return executeSync(binanceApiFutureService.newOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getTimeInForce(),
+                order.getQuantity(),
+                order.getPrice(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
 }

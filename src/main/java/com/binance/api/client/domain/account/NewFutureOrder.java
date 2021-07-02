@@ -61,6 +61,18 @@ public class NewFutureOrder {
         return order;
     }
 
+    public static NewFutureOrder closeLimitLongOrder(String symbol, String quantity, String price){
+        NewFutureOrder order = new NewFutureOrder(symbol);
+        order.quantity = quantity;
+        order.price = price;
+        order.side = OrderSide.SELL;
+        order.positionSide = PositionSide.LONG;
+        order.type = OrderType.LIMIT;
+        order.newClientOrderId = "CLOSELIMITLONG" + symbol;
+
+        return order;
+    }
+
     public static NewFutureOrder limitLongStopLossOrder(String symbol, String quantity, String stopPrice){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
@@ -95,6 +107,18 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = OrderType.LIMIT;
         order.newClientOrderId = "LIMITSHORT" + symbol;
+
+        return order;
+    }
+
+    public static NewFutureOrder closeLimitShortOrder(String symbol, String quantity, String price){
+        NewFutureOrder order = new NewFutureOrder(symbol);
+        order.quantity = quantity;
+        order.price = price;
+        order.side = OrderSide.BUY;
+        order.positionSide = PositionSide.SHORT;
+        order.type = OrderType.LIMIT;
+        order.newClientOrderId = "CLOSELIMITSHORT" + symbol;
 
         return order;
     }

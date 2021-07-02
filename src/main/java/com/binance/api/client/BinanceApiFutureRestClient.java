@@ -105,4 +105,7 @@ public interface BinanceApiFutureRestClient {
 
     List<NewFutureOrderResponse> placeLimitLongTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
     List<NewFutureOrderResponse> placeLimitShortTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
+
+    NewFutureOrderResponse placeCloseLimitLongOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeCloseLimitShortOrder(String symbol, String quantity, String price);
 }
