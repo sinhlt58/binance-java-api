@@ -16,6 +16,7 @@ public class NewFutureOrderResponse {
     private PositionSide positionSide;
     private OrderType type;
     private String clientOrderId;
+    private OrderStatus status;
 
     private int code;
     private String msg;
@@ -60,6 +61,14 @@ public class NewFutureOrderResponse {
         this.clientOrderId = clientOrderId;
     }
 
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
     public int getCode() {
         return code;
     }
@@ -84,6 +93,7 @@ public class NewFutureOrderResponse {
                 .append("positionSide", positionSide)
                 .append("type", type)
                 .append("clientOrderId", clientOrderId)
+                .append("status", status)
                 .append("code", code)
                 .append("msg", msg)
                 .toString();
