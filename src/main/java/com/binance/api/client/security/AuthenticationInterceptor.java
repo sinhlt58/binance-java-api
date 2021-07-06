@@ -51,7 +51,6 @@ public class AuthenticationInterceptor implements Interceptor {
                 newRequestBuilder.url(signedUrl);
             }
         }
-
         // Build new request after adding the necessary authentication information
         Request newRequest = newRequestBuilder.build();
         return chain.proceed(newRequest);

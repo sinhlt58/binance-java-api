@@ -41,6 +41,10 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
       callback.onResponse(event);
     } catch (IOException e) {
       throw new BinanceApiException(e);
+    } catch (Exception e){
+      System.out.println("BinanceApiWebSocketListener onMessage text: " + text);
+      System.out.println("BinanceApiWebSocketListener onMessage exception: " + e);
+      e.printStackTrace();
     }
   }
 
