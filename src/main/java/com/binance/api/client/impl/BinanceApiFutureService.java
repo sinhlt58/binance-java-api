@@ -5,6 +5,7 @@ import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.PositionSide;
 import com.binance.api.client.domain.TimeInForce;
+import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.NewOrderResponseType;
@@ -87,15 +88,21 @@ public interface BinanceApiFutureService {
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @POST("/fapi/v1/order")
     Call<NewFutureOrderResponse> newOrder(@Query("symbol") String symbol,
-                                        @Query("side") OrderSide side,
-                                        @Query("positionSide") PositionSide positionSide,
-                                        @Query("type") OrderType type,
-                                        @Query("timeInForce") TimeInForce timeInForce,
-                                        @Query("quantity") String quantity,
-                                        @Query("price") String price,
-                                        @Query("newClientOrderId") String newClientOrderId,
-                                        @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
-                                        @Query("recvWindow") Long recvWindow,
-                                        @Query("timestamp") Long timestamp);
+                                          @Query("side") OrderSide side,
+                                          @Query("positionSide") PositionSide positionSide,
+                                          @Query("type") OrderType type,
+                                          @Query("timeInForce") TimeInForce timeInForce,
+                                          @Query("quantity") String quantity,
+                                          @Query("price") String price,
+                                          @Query("newClientOrderId") String newClientOrderId,
+                                          @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
+                                          @Query("recvWindow") Long recvWindow,
+                                          @Query("timestamp") Long timestamp);
 
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+    @POST("/fapi/v1/countdownCancelAll")
+    Call<CountDownResponse> setOrderCountdownCancelAll(@Query("symbol") String symbol,
+                                                       @Query("countdownTime") Long countdownTime,
+                                                       @Query("recvWindow") Long recvWindow,
+                                                       @Query("timestamp") Long timestamp);
 }

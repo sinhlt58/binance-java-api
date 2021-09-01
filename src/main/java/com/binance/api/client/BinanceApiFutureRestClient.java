@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
@@ -99,6 +100,7 @@ public interface BinanceApiFutureRestClient {
     List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
     List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
     NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId);
+    CountDownResponse setOrderCountdownCancelAll(String symbol, Long countdownTime);
 
     NewFutureOrderResponse placeLimitLongOrder(String symbol, String quantity, String price);
     NewFutureOrderResponse placeLimitShortOrder(String symbol, String quantity, String price);

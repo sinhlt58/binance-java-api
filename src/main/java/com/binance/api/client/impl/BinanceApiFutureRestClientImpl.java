@@ -3,6 +3,7 @@ package com.binance.api.client.impl;
 import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
 import com.binance.api.client.domain.event.ListenKey;
@@ -107,6 +108,16 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     @Override
     public NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId) {
         return executeSync(binanceApiFutureService.cancelOrder(symbol, origClientOrderId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
+    }
+
+    @Override
+    public CountDownResponse setOrderCountdownCancelAll(String symbol, Long countdownTime) {
+        return executeSync(binanceApiFutureService.setOrderCountdownCancelAll(
+                symbol,
+                countdownTime,
+                BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
+                System.currentTimeMillis()
+        ));
     }
 
     @Override
