@@ -51,7 +51,7 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
     } catch (Exception e){
       logger.error(e.toString());
       e.printStackTrace();
-      logger.error(e.getMessage());
+      logger.error("text: {}", text);
     }
   }
 
