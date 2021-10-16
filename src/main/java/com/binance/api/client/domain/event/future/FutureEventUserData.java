@@ -3,8 +3,10 @@ package com.binance.api.client.domain.event.future;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@JsonDeserialize(using = FutureEventUserDataDeserializer.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FutureEventUserData {
     @JsonProperty("e")

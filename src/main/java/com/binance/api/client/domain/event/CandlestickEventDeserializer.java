@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -19,6 +20,11 @@ public class CandlestickEventDeserializer extends JsonDeserializer<CandlestickEv
   public CandlestickEvent deserialize(JsonParser jp, DeserializationContext ctx) throws IOException {
     ObjectCodec oc = jp.getCodec();
     JsonNode node = oc.readTree(jp);
+
+    // handle combine stream case
+    if (node.get("stream") != null){
+      node = node.get("data");
+    }
 
     CandlestickEvent candlestickEvent = new CandlestickEvent();
 
