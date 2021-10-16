@@ -4,7 +4,6 @@ import com.binance.api.client.BinanceApiCallback;
 import com.binance.api.client.BinanceApiFutureWebSocketApi;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.domain.event.CandlestickEvent;
-import com.binance.api.client.domain.event.UserDataUpdateEvent;
 import com.binance.api.client.domain.event.future.FutureEventUserData;
 import com.binance.api.client.domain.market.CandlestickInterval;
 import okhttp3.OkHttpClient;
@@ -57,8 +56,10 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
         final WebSocket webSocket = client.newWebSocket(request, listener);
         return () -> {
             final int code = 1000;
+            webSocket.cancel();
             listener.onClosing(webSocket, code, null);
             webSocket.close(code, null);
+            webSocket.cancel();
             listener.onClosed(webSocket, code, null);
         };
     }

@@ -8,9 +8,10 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-
 /**
  * Binance API WebSocket listener.
  */
@@ -23,6 +24,8 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
   private final ObjectReader objectReader;
 
   private boolean closing = false;
+
+  public static Logger logger = LogManager.getLogger(BinanceApiWebSocketListener.class);
 
   public BinanceApiWebSocketListener(BinanceApiCallback<T> callback, Class<T> eventClass) {
     this.callback = callback;
@@ -38,13 +41,17 @@ public class BinanceApiWebSocketListener<T> extends WebSocketListener {
   public void onMessage(WebSocket webSocket, String text) {
     try {
       T event = objectReader.readValue(text);
-      callback.onResponse(event);
+      if (callback == null){
+        logger.error("callback is null, text: {}", text);
+      } else {
+        callback.onResponse(event);
+      }
     } catch (IOException e) {
       throw new BinanceApiException(e);
     } catch (Exception e){
-      System.out.println("BinanceApiWebSocketListener onMessage text: " + text);
-      System.out.println("BinanceApiWebSocketListener onMessage exception: " + e);
+      logger.error(e.toString());
       e.printStackTrace();
+      logger.error(e.getMessage());
     }
   }
 
