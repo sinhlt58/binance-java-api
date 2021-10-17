@@ -5,10 +5,7 @@ import com.binance.api.client.domain.OrderSide;
 import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.PositionSide;
 import com.binance.api.client.domain.TimeInForce;
-import com.binance.api.client.domain.account.CountDownResponse;
-import com.binance.api.client.domain.account.NewFutureOrderResponse;
-import com.binance.api.client.domain.account.NewOrderResponse;
-import com.binance.api.client.domain.account.NewOrderResponseType;
+import com.binance.api.client.domain.account.*;
 import com.binance.api.client.domain.event.ListenKey;
 import com.binance.api.client.domain.general.ExchangeFutureInfo;
 import com.binance.api.client.domain.market.Candlestick;
@@ -103,6 +100,13 @@ public interface BinanceApiFutureService {
     @POST("/fapi/v1/countdownCancelAll")
     Call<CountDownResponse> setOrderCountdownCancelAll(@Query("symbol") String symbol,
                                                        @Query("countdownTime") Long countdownTime,
+                                                       @Query("recvWindow") Long recvWindow,
+                                                       @Query("timestamp") Long timestamp);
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+    @POST("/fapi/v1/leverage")
+    Call<ChangeLeverageResponse> changeInitialLeverage(@Query("symbol") String symbol,
+                                                       @Query("leverage") int leverage,
                                                        @Query("recvWindow") Long recvWindow,
                                                        @Query("timestamp") Long timestamp);
 }

@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.account.ChangeLeverageResponse;
 import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
@@ -110,4 +111,6 @@ public interface BinanceApiFutureRestClient {
 
     NewFutureOrderResponse placeCloseLimitLongOrder(String symbol, String quantity, String price);
     NewFutureOrderResponse placeCloseLimitShortOrder(String symbol, String quantity, String price);
+
+    ChangeLeverageResponse changeInitialLeverage(String symbol, int leverage);
 }

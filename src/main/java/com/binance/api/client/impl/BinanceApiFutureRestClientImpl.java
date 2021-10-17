@@ -3,6 +3,7 @@ package com.binance.api.client.impl;
 import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
+import com.binance.api.client.domain.account.ChangeLeverageResponse;
 import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
 import com.binance.api.client.domain.account.NewFutureOrderResponse;
@@ -208,5 +209,10 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
                 order.getRecvWindow(),
                 System.currentTimeMillis()
         ));
+    }
+
+    @Override
+    public ChangeLeverageResponse changeInitialLeverage(String symbol, int leverage) {
+        return executeSync(binanceApiFutureService.changeInitialLeverage(symbol, leverage, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
     }
 }
