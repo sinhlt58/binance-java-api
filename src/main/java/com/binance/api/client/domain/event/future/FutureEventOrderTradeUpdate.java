@@ -12,6 +12,8 @@ public class FutureEventOrderTradeUpdate {
     String symbol;
     @JsonProperty("c")
     String clientOrderId;
+    @JsonProperty("i")
+    long orderId;
     @JsonProperty("S")
     OrderSide side;
     @JsonProperty("o")
@@ -51,6 +53,14 @@ public class FutureEventOrderTradeUpdate {
                 .append("stopPrice", stopPrice)
                 .append("realizedProfit", realizedProfit)
                 .toString();
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
     public String getSymbol() {
