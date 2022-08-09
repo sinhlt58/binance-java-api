@@ -16,5 +16,6 @@ public enum TimeInForce {
   GTC,
   IOC,
   FOK,
-  GTX
+  GTX,
+  GTE_GTC,
 }
