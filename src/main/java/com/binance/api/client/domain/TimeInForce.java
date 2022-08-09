@@ -15,5 +15,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public enum TimeInForce {
   GTC,
   IOC,
-  FOK
+  FOK,
+  GTX
 }
