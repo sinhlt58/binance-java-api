@@ -37,7 +37,7 @@ public class NewFutureOrder {
 
     public NewFutureOrder(String symbol, boolean isForBatch){
         this.symbol = symbol;
-        this.timeInForce = TimeInForce.GTX; // post only order
+        this.timeInForce = TimeInForce.GTC; // post only order
         this.newOrderRespType = NewOrderResponseType.RESULT;
         if (!isForBatch){
             this.timestamp = System.currentTimeMillis();
