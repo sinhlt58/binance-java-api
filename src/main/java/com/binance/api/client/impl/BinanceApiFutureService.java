@@ -88,9 +88,21 @@ public interface BinanceApiFutureService {
                                           @Query("side") OrderSide side,
                                           @Query("positionSide") PositionSide positionSide,
                                           @Query("type") OrderType type,
-                                          @Query("timeInForce") TimeInForce timeInForce,
+                                          @Query("timeInForce") TimeInForce timeInForce, // only require for limit order
                                           @Query("quantity") String quantity,
-                                          @Query("price") String price,
+                                          @Query("price") String price, // only require for limit order
+                                          @Query("newClientOrderId") String newClientOrderId,
+                                          @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
+                                          @Query("recvWindow") Long recvWindow,
+                                          @Query("timestamp") Long timestamp);
+
+    @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
+    @POST("/fapi/v1/order")
+    Call<NewFutureOrderResponse> newMarketOrder(@Query("symbol") String symbol,
+                                          @Query("side") OrderSide side,
+                                          @Query("positionSide") PositionSide positionSide,
+                                          @Query("type") OrderType type,
+                                          @Query("quantity") String quantity,
                                           @Query("newClientOrderId") String newClientOrderId,
                                           @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
                                           @Query("recvWindow") Long recvWindow,

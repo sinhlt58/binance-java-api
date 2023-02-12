@@ -55,7 +55,7 @@ public class NewFutureOrder {
         order.price = price;
         order.side = OrderSide.BUY;
         order.positionSide = PositionSide.LONG;
-        order.type = OrderType.LIMIT;
+        order.type = OrderType.MARKET;
         order.newClientOrderId = "LIMITLONG" + symbol;
 
         return order;
@@ -67,7 +67,7 @@ public class NewFutureOrder {
         order.price = price;
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.LONG;
-        order.type = OrderType.LIMIT;
+        order.type = OrderType.MARKET;
         order.newClientOrderId = "CLOSELIMITLONG" + symbol;
 
         return order;
@@ -105,7 +105,7 @@ public class NewFutureOrder {
         order.price = price;
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.LIMIT;
+        order.type = OrderType.MARKET;
         order.newClientOrderId = "LIMITSHORT" + symbol;
 
         return order;
@@ -117,7 +117,7 @@ public class NewFutureOrder {
         order.price = price;
         order.side = OrderSide.BUY;
         order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.LIMIT;
+        order.type = OrderType.MARKET;
         order.newClientOrderId = "CLOSELIMITSHORT" + symbol;
 
         return order;
