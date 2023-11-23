@@ -57,10 +57,10 @@ public class BinanceApiFutureWebSocketApiImpl implements BinanceApiFutureWebSock
         return () -> {
             final int code = 1000;
             webSocket.cancel();
-            listener.onClosing(webSocket, code, null);
-            webSocket.close(code, null);
+            listener.onClosing(webSocket, code, "");
+            webSocket.close(code, "");
             webSocket.cancel();
-            listener.onClosed(webSocket, code, null);
+            listener.onClosed(webSocket, code, "");
         };
     }
 }
