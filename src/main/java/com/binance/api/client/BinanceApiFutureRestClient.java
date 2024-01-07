@@ -103,14 +103,18 @@ public interface BinanceApiFutureRestClient {
     NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId);
     CountDownResponse setOrderCountdownCancelAll(String symbol, Long countdownTime);
 
-    NewFutureOrderResponse placeLimitLongOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeLimitShortOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price, String clientOrderId);
+    NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price, String clientOrderId);
+
+    NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price, String clientOrderId);
+    NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price);
+    NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price, String clientOrderId);
 
     List<NewFutureOrderResponse> placeLimitLongTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
     List<NewFutureOrderResponse> placeLimitShortTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
-
-    NewFutureOrderResponse placeCloseLimitLongOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeCloseLimitShortOrder(String symbol, String quantity, String price);
 
     ChangeLeverageResponse changeInitialLeverage(String symbol, int leverage);
 }

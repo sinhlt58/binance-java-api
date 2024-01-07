@@ -122,8 +122,12 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     }
 
     @Override
-    public NewFutureOrderResponse placeLimitLongOrder(String symbol, String quantity, String price) {
-        NewFutureOrder order = NewFutureOrder.limitLongOrder(symbol, quantity, price);
+    public NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price) {
+        return placeMarketLongOrder(symbol, quantity, price, null);
+    }
+    @Override
+    public NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price, String clientOrderId) {
+        NewFutureOrder order = NewFutureOrder.marketLongOrder(symbol, quantity, price, clientOrderId);
         return executeSync(binanceApiFutureService.newMarketOrder(
                 order.getSymbol(),
                 order.getSide(),
@@ -138,8 +142,52 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     }
 
     @Override
-    public NewFutureOrderResponse placeLimitShortOrder(String symbol, String quantity, String price) {
-        NewFutureOrder order = NewFutureOrder.limitShortOrder(symbol, quantity, price);
+    public NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price) {
+        return placeMarketShortOrder(symbol, quantity, price, null);
+    }
+    @Override
+    public NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price, String clientOrderId) {
+        NewFutureOrder order = NewFutureOrder.marketShortOrder(symbol, quantity, price, clientOrderId);
+        return executeSync(binanceApiFutureService.newMarketOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getQuantity(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price) {
+        return placeCloseMarketLongOrder(symbol, quantity, price, null);
+    }
+    @Override
+    public NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price, String clientOrderId) {
+        NewFutureOrder order = NewFutureOrder.closeMarketLongOrder(symbol, quantity, price, clientOrderId);
+        return executeSync(binanceApiFutureService.newMarketOrder(
+                order.getSymbol(),
+                order.getSide(),
+                order.getPositionSide(),
+                order.getType(),
+                order.getQuantity(),
+                order.getNewClientOrderId(),
+                order.getNewOrderRespType(),
+                order.getRecvWindow(),
+                System.currentTimeMillis()
+        ));
+    }
+
+    @Override
+    public NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price) {
+        return placeCloseMarketShortOrder(symbol, quantity, price, null);
+    }
+    @Override
+    public NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price, String clientOrderId) {
+        NewFutureOrder order = NewFutureOrder.closeMarketShortOrder(symbol, quantity, price, clientOrderId);
         return executeSync(binanceApiFutureService.newMarketOrder(
                 order.getSymbol(),
                 order.getSide(),
@@ -167,38 +215,6 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
         return executeSync(binanceApiFutureService.createBatchOrders(
                 NewFutureOrder.limitShortTakeProfitAndStopLossOrdersString(symbol, quantity, stopLossPrice, takeProfitPrice),
                 BinanceApiConstants.DEFAULT_RECEIVING_WINDOW,
-                System.currentTimeMillis()
-        ));
-    }
-
-    @Override
-    public NewFutureOrderResponse placeCloseLimitLongOrder(String symbol, String quantity, String price) {
-        NewFutureOrder order = NewFutureOrder.closeLimitLongOrder(symbol, quantity, price);
-        return executeSync(binanceApiFutureService.newMarketOrder(
-                order.getSymbol(),
-                order.getSide(),
-                order.getPositionSide(),
-                order.getType(),
-                order.getQuantity(),
-                order.getNewClientOrderId(),
-                order.getNewOrderRespType(),
-                order.getRecvWindow(),
-                System.currentTimeMillis()
-        ));
-    }
-
-    @Override
-    public NewFutureOrderResponse placeCloseLimitShortOrder(String symbol, String quantity, String price) {
-        NewFutureOrder order = NewFutureOrder.closeLimitShortOrder(symbol, quantity, price);
-        return executeSync(binanceApiFutureService.newMarketOrder(
-                order.getSymbol(),
-                order.getSide(),
-                order.getPositionSide(),
-                order.getType(),
-                order.getQuantity(),
-                order.getNewClientOrderId(),
-                order.getNewOrderRespType(),
-                order.getRecvWindow(),
                 System.currentTimeMillis()
         ));
     }

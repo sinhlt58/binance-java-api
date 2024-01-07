@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A trade order to enter or exit a position.
@@ -49,26 +50,50 @@ public class NewFutureOrder {
         this(symbol, true);
     }
 
-    public static NewFutureOrder limitLongOrder(String symbol, String quantity, String price){
+    public static NewFutureOrder marketLongOrder(String symbol, String quantity, String price, String clientOrderId){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.BUY;
         order.positionSide = PositionSide.LONG;
         order.type = OrderType.MARKET;
-        order.newClientOrderId = "LIMITLONG" + symbol;
+        order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETLONG" + symbol);
 
         return order;
     }
 
-    public static NewFutureOrder closeLimitLongOrder(String symbol, String quantity, String price){
+    public static NewFutureOrder marketShortOrder(String symbol, String quantity, String price, String clientOrderId){
+        NewFutureOrder order = new NewFutureOrder(symbol);
+        order.quantity = quantity;
+        order.price = price;
+        order.side = OrderSide.SELL;
+        order.positionSide = PositionSide.SHORT;
+        order.type = OrderType.MARKET;
+        order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETSHORT" + symbol);
+
+        return order;
+    }
+
+    public static NewFutureOrder closeMarketLongOrder(String symbol, String quantity, String price, String clientOrderId){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
         order.side = OrderSide.SELL;
         order.positionSide = PositionSide.LONG;
         order.type = OrderType.MARKET;
-        order.newClientOrderId = "CLOSELIMITLONG" + symbol;
+        order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETLONG" + symbol);
+
+        return order;
+    }
+
+    public static NewFutureOrder closeMarketShortOrder(String symbol, String quantity, String price, String clientOrderId){
+        NewFutureOrder order = new NewFutureOrder(symbol);
+        order.quantity = quantity;
+        order.price = price;
+        order.side = OrderSide.BUY;
+        order.positionSide = PositionSide.SHORT;
+        order.type = OrderType.MARKET;
+        order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETSHORT" + symbol);
 
         return order;
     }
@@ -95,30 +120,6 @@ public class NewFutureOrder {
         order.type = OrderType.TAKE_PROFIT;
         order.stopPrice = takeProfitPrice;
         order.newClientOrderId = "TAKEPROFITLONG" + symbol;
-
-        return order;
-    }
-
-    public static NewFutureOrder limitShortOrder(String symbol, String quantity, String price){
-        NewFutureOrder order = new NewFutureOrder(symbol);
-        order.quantity = quantity;
-        order.price = price;
-        order.side = OrderSide.SELL;
-        order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.MARKET;
-        order.newClientOrderId = "LIMITSHORT" + symbol;
-
-        return order;
-    }
-
-    public static NewFutureOrder closeLimitShortOrder(String symbol, String quantity, String price){
-        NewFutureOrder order = new NewFutureOrder(symbol);
-        order.quantity = quantity;
-        order.price = price;
-        order.side = OrderSide.BUY;
-        order.positionSide = PositionSide.SHORT;
-        order.type = OrderType.MARKET;
-        order.newClientOrderId = "CLOSELIMITSHORT" + symbol;
 
         return order;
     }
@@ -151,7 +152,7 @@ public class NewFutureOrder {
 
     public static String openLongPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
-        orders.add(limitLongOrder(symbol, quantity, price));
+        orders.add(marketLongOrder(symbol, quantity, price, null));
         orders.add(limitLongStopLossOrder(symbol, quantity, stopLossPrice));
         orders.add(limitLongTakeProfitOrder(symbol, quantity, takeProfitPrice));
 
@@ -160,7 +161,7 @@ public class NewFutureOrder {
 
     public static String openShortPositionString(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice){
         List<NewFutureOrder> orders = new ArrayList<>();
-        orders.add(limitShortOrder(symbol, quantity, price));
+        orders.add(marketShortOrder(symbol, quantity, price, null));
         orders.add(limitShortStopLossOrder(symbol, quantity, stopLossPrice));
         orders.add(limitShortTakeProfitOrder(symbol, quantity, takeProfitPrice));
 
