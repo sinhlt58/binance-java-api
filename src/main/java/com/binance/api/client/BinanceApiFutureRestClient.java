@@ -1,5 +1,6 @@
 package com.binance.api.client;
 
+import com.binance.api.client.domain.OrderType;
 import com.binance.api.client.domain.account.ChangeLeverageResponse;
 import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
@@ -98,23 +99,15 @@ public interface BinanceApiFutureRestClient {
     void closeUserDataStream();
 
     // Orders, positions API
-    List<NewFutureOrderResponse> openLimitLongPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
-    List<NewFutureOrderResponse> openLimitShortPosition(String symbol, String quantity, String price, String stopLossPrice, String takeProfitPrice);
     NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId);
     CountDownResponse setOrderCountdownCancelAll(String symbol, Long countdownTime);
 
-    NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeMarketLongOrder(String symbol, String quantity, String price, String clientOrderId);
-    NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeMarketShortOrder(String symbol, String quantity, String price, String clientOrderId);
+    NewFutureOrderResponse placeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
+    NewFutureOrderResponse placeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
 
-    NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeCloseMarketLongOrder(String symbol, String quantity, String price, String clientOrderId);
-    NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price);
-    NewFutureOrderResponse placeCloseMarketShortOrder(String symbol, String quantity, String price, String clientOrderId);
+    NewFutureOrderResponse placeCloseLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
+    NewFutureOrderResponse placeCloseShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
 
-    List<NewFutureOrderResponse> placeLimitLongTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
-    List<NewFutureOrderResponse> placeLimitShortTakeProfitAndStopLossOrders(String symbol, String quantity, String stopLossPrice, String takeProfitPrice);
 
     ChangeLeverageResponse changeInitialLeverage(String symbol, int leverage);
 }
