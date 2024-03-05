@@ -167,4 +167,20 @@ public class FutureEventOrderTradeUpdate {
     public void setRealizedProfit(String realizedProfit) {
         this.realizedProfit = realizedProfit;
     }
+
+    public String getQuantityLastFilledTrade() {
+        return quantityLastFilledTrade;
+    }
+
+    public String getAccumulatedQuantity() {
+        return accumulatedQuantity;
+    }
+
+    public String getPriceOfLastFilledTrade() {
+        return priceOfLastFilledTrade;
+    }
+
+    public String getCommission() {
+        return commission;
+    }
 }
