@@ -36,6 +36,15 @@ public class FutureEventOrderTradeUpdate {
 
     @JsonProperty("rp")
     String realizedProfit;
+    
+    @JsonProperty("l")
+    private String quantityLastFilledTrade;
+    @JsonProperty("z")
+    private String accumulatedQuantity;
+    @JsonProperty("L")
+    private String priceOfLastFilledTrade;
+    @JsonProperty("n")
+    private String commission;
 
     @Override
     public String toString() {
