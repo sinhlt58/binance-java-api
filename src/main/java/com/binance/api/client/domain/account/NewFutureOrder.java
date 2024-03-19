@@ -56,7 +56,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETLONG" + symbol);
-        if (orderType == null) {
+        if (timeInForce == null) {
             order.timeInForce = TimeInForce.GTC;
         } else {
             order.timeInForce = timeInForce;
@@ -73,7 +73,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETSHORT" + symbol);
-        if (orderType == null) {
+        if (timeInForce == null) {
             order.timeInForce = TimeInForce.GTC;
         } else {
             order.timeInForce = timeInForce;
@@ -90,7 +90,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETLONG" + symbol);
-        if (orderType == null) {
+        if (timeInForce == null) {
             order.timeInForce = TimeInForce.GTC;
         } else {
             order.timeInForce = timeInForce;
@@ -107,7 +107,7 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETSHORT" + symbol);
-        if (orderType == null) {
+        if (timeInForce == null) {
             order.timeInForce = TimeInForce.GTC;
         } else {
             order.timeInForce = timeInForce;
