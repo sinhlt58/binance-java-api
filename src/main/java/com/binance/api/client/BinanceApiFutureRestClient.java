@@ -1,6 +1,7 @@
 package com.binance.api.client;
 
 import com.binance.api.client.domain.OrderType;
+import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.ChangeLeverageResponse;
 import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
@@ -102,11 +103,11 @@ public interface BinanceApiFutureRestClient {
     NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId);
     CountDownResponse setOrderCountdownCancelAll(String symbol, Long countdownTime);
 
-    NewFutureOrderResponse placeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
-    NewFutureOrderResponse placeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
+    NewFutureOrderResponse placeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce);
+    NewFutureOrderResponse placeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce);
 
-    NewFutureOrderResponse placeCloseLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
-    NewFutureOrderResponse placeCloseShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId);
+    NewFutureOrderResponse placeCloseLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce);
+    NewFutureOrderResponse placeCloseShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce);
 
 
     ChangeLeverageResponse changeInitialLeverage(String symbol, int leverage);

@@ -48,7 +48,7 @@ public class NewFutureOrder {
         this(symbol, true);
     }
 
-    public static NewFutureOrder longOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId){
+    public static NewFutureOrder longOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
@@ -56,14 +56,16 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETLONG" + symbol);
-        if (orderType == OrderType.LIMIT) {
+        if (orderType == null) {
             order.timeInForce = TimeInForce.GTC;
+        } else {
+            order.timeInForce = timeInForce;
         }
 
         return order;
     }
 
-    public static NewFutureOrder shortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId){
+    public static NewFutureOrder shortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
@@ -71,14 +73,16 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "MARKETSHORT" + symbol);
-        if (orderType == OrderType.LIMIT) {
+        if (orderType == null) {
             order.timeInForce = TimeInForce.GTC;
+        } else {
+            order.timeInForce = timeInForce;
         }
 
         return order;
     }
 
-    public static NewFutureOrder closeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId){
+    public static NewFutureOrder closeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
@@ -86,14 +90,16 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.LONG;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETLONG" + symbol);
-        if (orderType == OrderType.LIMIT) {
+        if (orderType == null) {
             order.timeInForce = TimeInForce.GTC;
+        } else {
+            order.timeInForce = timeInForce;
         }
 
         return order;
     }
 
-    public static NewFutureOrder closeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId){
+    public static NewFutureOrder closeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce){
         NewFutureOrder order = new NewFutureOrder(symbol);
         order.quantity = quantity;
         order.price = price;
@@ -101,8 +107,10 @@ public class NewFutureOrder {
         order.positionSide = PositionSide.SHORT;
         order.type = orderType;
         order.newClientOrderId = Objects.requireNonNullElseGet(clientOrderId, () -> "CLOSEMARKETSHORT" + symbol);
-        if (orderType == OrderType.LIMIT) {
+        if (orderType == null) {
             order.timeInForce = TimeInForce.GTC;
+        } else {
+            order.timeInForce = timeInForce;
         }
 
         return order;

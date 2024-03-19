@@ -4,6 +4,7 @@ import com.binance.api.client.BinanceApiFutureRestClient;
 import com.binance.api.client.config.BinanceApiConfig;
 import com.binance.api.client.constant.BinanceApiConstants;
 import com.binance.api.client.domain.OrderType;
+import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.ChangeLeverageResponse;
 import com.binance.api.client.domain.account.CountDownResponse;
 import com.binance.api.client.domain.account.NewFutureOrder;
@@ -138,26 +139,26 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
     }
 
     @Override
-    public NewFutureOrderResponse placeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId) {
-        NewFutureOrder order = NewFutureOrder.longOrder(symbol, quantity, price, orderType, clientOrderId);
+    public NewFutureOrderResponse placeLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce) {
+        NewFutureOrder order = NewFutureOrder.longOrder(symbol, quantity, price, orderType, clientOrderId, timeInForce);
         return placeOrder(order);
     }
 
     @Override
-    public NewFutureOrderResponse placeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId) {
-        NewFutureOrder order = NewFutureOrder.shortOrder(symbol, quantity, price, orderType, clientOrderId);
+    public NewFutureOrderResponse placeShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce) {
+        NewFutureOrder order = NewFutureOrder.shortOrder(symbol, quantity, price, orderType, clientOrderId, timeInForce);
         return placeOrder(order);
     }
 
     @Override
-    public NewFutureOrderResponse placeCloseLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId) {
-        NewFutureOrder order = NewFutureOrder.closeLongOrder(symbol, quantity, price, orderType, clientOrderId);
+    public NewFutureOrderResponse placeCloseLongOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce) {
+        NewFutureOrder order = NewFutureOrder.closeLongOrder(symbol, quantity, price, orderType, clientOrderId, timeInForce);
         return placeOrder(order);
     }
 
     @Override
-    public NewFutureOrderResponse placeCloseShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId) {
-        NewFutureOrder order = NewFutureOrder.closeShortOrder(symbol, quantity, price, orderType, clientOrderId);
+    public NewFutureOrderResponse placeCloseShortOrder(String symbol, String quantity, String price, OrderType orderType, String clientOrderId, TimeInForce timeInForce) {
+        NewFutureOrder order = NewFutureOrder.closeShortOrder(symbol, quantity, price, orderType, clientOrderId, timeInForce);
         return placeOrder(order);
     }
 
