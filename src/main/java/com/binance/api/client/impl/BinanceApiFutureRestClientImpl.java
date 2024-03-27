@@ -92,7 +92,6 @@ public class BinanceApiFutureRestClientImpl implements BinanceApiFutureRestClien
         executeSync(binanceApiFutureService.closeAliveUserDataStream());
     }
 
-
     @Override
     public NewFutureOrderResponse cancelOrder(String symbol, String origClientOrderId) {
         return executeSync(binanceApiFutureService.cancelOrder(symbol, origClientOrderId, BinanceApiConstants.DEFAULT_RECEIVING_WINDOW, System.currentTimeMillis()));
